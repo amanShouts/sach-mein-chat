@@ -54,7 +54,8 @@ function App() {
   const sendText = () => {
     const textObj = { id: uniqueId, msg: text, time: new Date(), type: 'chat' };
     setTextSoFar(prev => [...prev, textObj]);
-    socketRef.current.send(JSON.stringify(textObj))
+    socketRef.current.send(JSON.stringify(textObj));
+    setText(prev=> '')
   }
 
   // console.log(text, "text", textSoFar)
