@@ -4,6 +4,7 @@ import { useState } from 'react';
 // import websocket from 'websocket';
 import { v4 as uuidv4 } from 'uuid';
 
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'back-mein-chat-1.onrender.com';
 function App() {
 
   // const WebSocketServer = websocket.server;
@@ -18,6 +19,8 @@ function App() {
   let socketRef = useRef(null);
 
   // console.log(socket, " client")
+  console.log(SERVER_URL, " SERVER_URL");
+
   useEffect(() => {
     // Connection opened
     let newUniqueId = null;
@@ -25,7 +28,7 @@ function App() {
       newUniqueId = uuidv4();
       setUniqueId(prev => newUniqueId);
     }
-    socketRef.current = new WebSocket('ws://localhost:3000', 'echo-protocol');
+    socketRef.current = new WebSocket(`wss://${SERVER_URL}/`, 'echo-protocol');
     socketRef.current.addEventListener("open", (event) => {
       socketRef.current.send(JSON.stringify({ id: uniqueId ? uniqueId : newUniqueId, msg: "Hello Server man!", type: 'init' }));
     });
